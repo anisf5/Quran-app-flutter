@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1017884773437",
+    "project_id": "curan-app",
+    "storage_bucket": "curan-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017884773437:android:263de9fbd08db0e3df6e54",
+        "android_client_info": {
+          "package_name": "com.example.curan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCjHHr_4RAbme8_6ru3MjAHulUtmh5y_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
