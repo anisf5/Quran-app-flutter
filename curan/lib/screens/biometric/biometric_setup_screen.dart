@@ -96,7 +96,7 @@ class _BiometricSetupScreenState extends State<BiometricSetupScreen> {
 
   void _navigateToDashboard() {
     Navigator.of(context).pushNamedAndRemoveUntil(
-      AppRoutes.dashboard,
+      AppRoutes.main,
       (route) => false,
     );
   }

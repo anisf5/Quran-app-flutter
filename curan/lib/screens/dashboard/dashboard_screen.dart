@@ -7,6 +7,7 @@ import '../../core/constants/app_constants.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/stats_provider.dart';
 import '../../providers/audio_provider.dart';
+import '../../providers/navigation_provider.dart';
 import '../../widgets/histogram_chart.dart';
 import '../../widgets/track_list_item.dart';
 
@@ -172,7 +173,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               size: 20,
             ),
           ),
-          onPressed: () => Navigator.of(context).pushNamed(AppRoutes.settings),
+          onPressed: () => context.read<NavigationProvider>().goToSettings(),
         ),
         const SizedBox(width: 8),
       ],
@@ -275,7 +276,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 gradient: [const Color(0xFF00BFA6), const Color(0xFF00897B)],
                 onTap: () {
                   context.read<AudioProvider>().selectCategory(0);
-                  Navigator.of(context).pushNamed(AppRoutes.player);
+                  context.read<NavigationProvider>().goToPlayer();
                 },
               ),
             ),
@@ -287,7 +288,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 sublabel: 'Your saved Surahs',
                 gradient: [const Color(0xFFE91E63), const Color(0xFFC2185B)],
                 onTap: () =>
-                    Navigator.of(context).pushNamed(AppRoutes.favorites),
+                    context.read<NavigationProvider>().goToFavorites(),
               ),
             ),
           ],

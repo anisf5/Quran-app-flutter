@@ -11,6 +11,7 @@ import 'providers/audio_provider.dart';
 import 'providers/favorites_provider.dart';
 import 'providers/stats_provider.dart';
 import 'providers/prayer_times_provider.dart';
+import 'providers/navigation_provider.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/auth/forgot_password_screen.dart';
@@ -22,6 +23,7 @@ import 'screens/prayer_times/prayer_times_screen.dart';
 import 'screens/settings/settings_screen.dart';
 import 'screens/splash/splash_screen.dart';
 import 'widgets/persistent_player_wrapper.dart';
+import 'widgets/main_shell.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +49,7 @@ class CuranApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         ChangeNotifierProvider(create: (_) => StatsProvider()),
         ChangeNotifierProvider(create: (_) => PrayerTimesProvider()),
+        ChangeNotifierProvider(create: (_) => NavigationProvider()),
       ],
       child: TrackingInitializer(
         child: MaterialApp(
@@ -182,7 +185,7 @@ class AuthWrapper extends StatelessWidget {
           return const LoginScreen();
         }
 
-        return const DashboardScreen();
+        return const MainShell();
       },
     );
   }

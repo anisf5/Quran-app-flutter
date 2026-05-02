@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../providers/favorites_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/audio_provider.dart';
+import '../../providers/navigation_provider.dart';
 import '../../models/track_model.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -119,7 +120,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             fav.favorites,
                             i,
                           );
-                          Navigator.of(context).pushNamed('/player');
+                          context.read<NavigationProvider>().goToPlayer();
                         },
                       ),
                     );

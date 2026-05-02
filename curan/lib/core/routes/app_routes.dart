@@ -6,7 +6,8 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
-  static const String dashboard = '/dashboard';
+  static const String main = '/main';
+  static const String dashboard = '/dashboard'; // Kept for backwards compatibility
   static const String player = '/player';
   static const String favorites = '/favorites';
   static const String settings = '/settings';
