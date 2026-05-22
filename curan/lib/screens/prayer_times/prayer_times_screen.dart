@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/routes/app_routes.dart';
 import '../../providers/prayer_times_provider.dart';
 import '../../models/prayer_times_model.dart';
 
@@ -78,6 +79,14 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                         ],
                       ),
                       const Spacer(),
+                      IconButton(
+                        icon: Icon(
+                          Icons.explore_rounded,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed(AppRoutes.qibla),
+                      ),
                       Consumer<PrayerTimesProvider>(
                         builder: (_, p, __) => IconButton(
                           icon: Icon(

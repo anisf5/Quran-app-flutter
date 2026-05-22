@@ -22,6 +22,7 @@ import 'screens/player/player_screen.dart';
 import 'screens/prayer_times/prayer_times_screen.dart';
 import 'screens/settings/settings_screen.dart';
 import 'screens/search/search_screen.dart';
+import 'screens/qibla/qibla_compass_screen.dart';
 import 'screens/splash/splash_screen.dart';
 import 'widgets/persistent_player_wrapper.dart';
 import 'widgets/main_shell.dart';
@@ -124,6 +125,11 @@ class CuranApp extends StatelessWidget {
       case AppRoutes.search:
         return MaterialPageRoute(
           builder: (_) => const SearchScreen(),
+          settings: settings,
+        );
+      case AppRoutes.qibla:
+        return MaterialPageRoute(
+          builder: (_) => const QiblaCompassScreen(),
           settings: settings,
         );
       default:

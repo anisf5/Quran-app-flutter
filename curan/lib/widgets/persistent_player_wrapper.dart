@@ -5,6 +5,7 @@ import '../screens/auth/register_screen.dart';
 import '../screens/auth/forgot_password_screen.dart';
 import '../screens/biometric/biometric_setup_screen.dart';
 import '../screens/search/search_screen.dart';
+import '../screens/qibla/qibla_compass_screen.dart';
 import '../screens/splash/splash_screen.dart';
 import 'main_shell.dart';
 
@@ -61,6 +62,11 @@ class _PersistentPlayerWrapperState extends State<PersistentPlayerWrapper> {
       case AppRoutes.search:
         return MaterialPageRoute(
           builder: (_) => const SearchScreen(),
+          settings: settings,
+        );
+      case AppRoutes.qibla:
+        return MaterialPageRoute(
+          builder: (_) => const QiblaCompassScreen(),
           settings: settings,
         );
       // All authenticated main screens are now handled by MainShell
