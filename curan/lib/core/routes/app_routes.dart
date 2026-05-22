@@ -12,4 +12,5 @@ class AppRoutes {
   static const String favorites = '/favorites';
   static const String settings = '/settings';
   static const String prayerTimes = '/prayer-times';
+  static const String search = '/search';
 }

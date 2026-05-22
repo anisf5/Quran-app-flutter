@@ -87,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     if (success && mounted) {
-      Navigator.of(context).pushReplacementNamed(AppRoutes.biometricSetup);
+      Navigator.of(context).pushReplacementNamed(AppRoutes.main);
     }
   }
 

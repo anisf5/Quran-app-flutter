@@ -4,6 +4,7 @@ import '../../providers/audio_provider.dart';
 import '../../providers/favorites_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/audio_player_widget.dart';
+import '../../widgets/reciter_avatar.dart';
 import '../../models/track_model.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -133,21 +134,10 @@ class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderSt
                     horizontal: 16,
                     vertical: 8,
                   ),
-                  leading: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).colorScheme.primary,
-                          Theme.of(context).colorScheme.secondary,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(Icons.face, color: Colors.white),
+                  leading: ReciterAvatar(
+                    name: category.name,
+                    size: 50,
+                    fontSize: 18,
                   ),
                   title: Text(
                     category.name,
@@ -320,18 +310,24 @@ class _PlayerScreenState extends State<PlayerScreen> with SingleTickerProviderSt
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        category.name,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                  child: Row(
+                    children: [
+                      ReciterAvatar(
+                        name: category.name,
+                        size: 44,
+                        fontSize: 16,
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Text(
+                          category.name,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.tertiary,

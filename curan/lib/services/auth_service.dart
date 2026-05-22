@@ -83,4 +83,25 @@ class AuthService {
       await user.updatePassword(newPassword);
     }
   }
+
+  Future<void> updateProfile({
+    required String firstName,
+    required String lastName,
+  }) async {
+    final user = currentUser;
+    if (user == null) return;
+
+    await _firestore.collection('users').doc(user.uid).update({
+      'firstName': firstName,
+      'lastName': lastName,
+    });
+  }
+
+  Future<void> deleteAccount() async {
+    final user = currentUser;
+    if (user == null) return;
+
+    await _firestore.collection('users').doc(user.uid).delete();
+    await user.delete();
+  }
 }

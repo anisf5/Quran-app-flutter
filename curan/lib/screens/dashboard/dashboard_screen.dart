@@ -168,6 +168,23 @@ class _DashboardScreenState extends State<DashboardScreen>
               border: Border.all(color: Colors.white12),
             ),
             child: const Icon(
+              Icons.search_rounded,
+              color: Colors.white,
+              size: 20,
+            ),
+          ),
+          onPressed: () => Navigator.of(context).pushNamed(AppRoutes.search),
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.08),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white12),
+            ),
+            child: const Icon(
               Icons.settings_outlined,
               color: Colors.white,
               size: 20,

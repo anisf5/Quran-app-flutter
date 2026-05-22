@@ -119,6 +119,53 @@ class AuthProvider extends ChangeNotifier {
     await _authService.updatePassword(newPassword);
   }
 
+  Future<bool> updateProfile({
+    required String firstName,
+    required String lastName,
+  }) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      await _authService.updateProfile(
+        firstName: firstName,
+        lastName: lastName,
+      );
+      _currentUser = _currentUser?.copyWith(
+        firstName: firstName,
+        lastName: lastName,
+      );
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _isLoading = false;
+      _errorMessage = 'Failed to update profile: $e';
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> deleteAccount() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      await _authService.deleteAccount();
+      _currentUser = null;
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _isLoading = false;
+      _errorMessage = 'Failed to delete account: $e';
+      notifyListeners();
+      return false;
+    }
+  }
+
   String _getErrorMessage(dynamic error) {
     final errorString = error.toString();
     if (errorString.contains('weak-password')) {

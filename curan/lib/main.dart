@@ -21,6 +21,7 @@ import 'screens/favorites/favorites_screen.dart';
 import 'screens/player/player_screen.dart';
 import 'screens/prayer_times/prayer_times_screen.dart';
 import 'screens/settings/settings_screen.dart';
+import 'screens/search/search_screen.dart';
 import 'screens/splash/splash_screen.dart';
 import 'widgets/persistent_player_wrapper.dart';
 import 'widgets/main_shell.dart';
@@ -118,6 +119,11 @@ class CuranApp extends StatelessWidget {
       case AppRoutes.prayerTimes:
         return MaterialPageRoute(
           builder: (_) => const PrayerTimesScreen(),
+          settings: settings,
+        );
+      case AppRoutes.search:
+        return MaterialPageRoute(
+          builder: (_) => const SearchScreen(),
           settings: settings,
         );
       default:

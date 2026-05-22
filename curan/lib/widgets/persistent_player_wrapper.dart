@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../core/routes/app_routes.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/auth/forgot_password_screen.dart';
 import '../screens/biometric/biometric_setup_screen.dart';
+import '../screens/search/search_screen.dart';
 import '../screens/splash/splash_screen.dart';
 import 'main_shell.dart';
 
@@ -46,7 +48,7 @@ class _PersistentPlayerWrapperState extends State<PersistentPlayerWrapper> {
           builder: (_) => const RegisterScreen(),
           settings: settings,
         );
-      case '/forgotPassword':
+      case AppRoutes.forgotPassword:
         return MaterialPageRoute(
           builder: (_) => const ForgotPasswordScreen(),
           settings: settings,
@@ -54,6 +56,11 @@ class _PersistentPlayerWrapperState extends State<PersistentPlayerWrapper> {
       case '/biometricSetup':
         return MaterialPageRoute(
           builder: (_) => const BiometricSetupScreen(),
+          settings: settings,
+        );
+      case AppRoutes.search:
+        return MaterialPageRoute(
+          builder: (_) => const SearchScreen(),
           settings: settings,
         );
       // All authenticated main screens are now handled by MainShell

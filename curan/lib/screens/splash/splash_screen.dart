@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../core/constants/app_constants.dart';
 import '../../services/biometric_service.dart';
+import '../../services/device_settings_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,6 +17,7 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
   final BiometricService _biometricService = BiometricService();
+  final DeviceSettingsService _settingsService = DeviceSettingsService();
 
   @override
   void initState() {
@@ -42,11 +46,33 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _runStartupSequence() async {
-    // Check if biometric is available
+    final prefs = await SharedPreferences.getInstance();
+    final wasPreviouslySetup =
+        prefs.getBool(AppConstants.biometricSetupKey) ?? false;
+
+    if (!wasPreviouslySetup) {
+      final isAvailable = await _biometricService.isBiometricAvailable();
+      if (!isAvailable) {
+        _showRequireBiometricDialog();
+        return;
+      }
+      final success = await _biometricService.authenticate(
+        reason: 'Authenticate to access Curan',
+      );
+      if (success) {
+        await prefs.setBool(AppConstants.biometricSetupKey, true);
+        _navigateToAuthWrapper();
+      } else {
+        _showRetryDialog();
+        return;
+      }
+      return;
+    }
+
     final isAvailable = await _biometricService.isBiometricAvailable();
 
     if (!isAvailable) {
-      _navigateToAuthWrapper();
+      _showRequireBiometricDialog();
       return;
     }
 
@@ -57,46 +83,90 @@ class _SplashScreenState extends State<SplashScreen>
     if (success) {
       _navigateToAuthWrapper();
     } else {
-      // Show failed state
-      if (mounted) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => AlertDialog(
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            title: const Text(
-              'Authentication Required',
+      _showRetryDialog();
+    }
+  }
+
+  void _showRequireBiometricDialog() {
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text(
+          'Biometric Required',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: const Text(
+          'This app requires fingerprint or Face ID to protect your privacy. '
+          'Please set up biometric authentication in your device settings.',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+              await _settingsService.openSecuritySettings();
+              _runStartupSequence();
+            },
+            child: const Text(
+              'Open Settings',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.tealAccent,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            content: const Text(
-              'You must authenticate to use the app. Please try again.',
-              style: TextStyle(color: Colors.white70),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _runStartupSequence();
-                },
-                child: const Text(
-                  'Try Again',
-                  style: TextStyle(
-                    color: Colors.tealAccent,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
           ),
-        );
-      }
-    }
+        ],
+      ),
+    );
+  }
+
+  void _showRetryDialog() {
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text(
+          'Authentication Required',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: const Text(
+          'You must authenticate to use the app. Please try again.',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _runStartupSequence();
+            },
+            child: const Text(
+              'Try Again',
+              style: TextStyle(
+                color: Colors.tealAccent,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _navigateToAuthWrapper() {
@@ -114,7 +184,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D1B2A), // Modern deep background
+      backgroundColor: const Color(0xFF0D1B2A),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
